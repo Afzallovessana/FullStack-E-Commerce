@@ -5,7 +5,7 @@ name:{
     type: String,
     required:true,
     trim:true,
-    maxLength:15
+    maxLength:20
 },
 email:{
     type: String,
@@ -41,6 +41,10 @@ timestamps:true,
 }
 )
 
+// userSchema.methods.matchPassword = async function(enteredPaswword){
+//     return password
+
+// }
 const User = mongoose.model('user', userSchema);
 
 export default User;

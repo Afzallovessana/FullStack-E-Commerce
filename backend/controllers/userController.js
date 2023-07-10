@@ -1,9 +1,10 @@
 import User from "../models/userModel.js";
+import generateToken from "../config/generateToken.js";
 
 
 const registerUser = async(req, res) => {
 try {
-    // console.log('requestBody' , req.body);
+    console.log('requestBody' , req.body);
 const {name, email, password, about, role} =req.body;
 const userExists = await User.findOne({email});
 if(userExists){
@@ -20,6 +21,8 @@ const user = await User.create({
     about:about,
     role:role,
 })
+console.log('user in backend controller', user);
+
 
 if (user){
 
@@ -28,7 +31,8 @@ if (user){
      name: user.name,
      email:user.email,
      about:about,
-     role:user.role
+     role:user.role,
+     result:"user created"
 
 
     })
@@ -41,8 +45,31 @@ if (user){
 }
 };
 
-const loginUser = (req, res) => {
-    console.log('hello from login user')
+const loginUser = async (req, res) => {
+    try {
+        const {email,password}=req.body;
+    const user = await User.findOne({email , password});
+    console.log('user' ,user);
+    if(user){
+        res.status(200).json({
+            _id: user._id,
+            name:user.name,
+            about:user.about,
+            role:user.role,
+            result:"login success",
+            token: generateToken(user._id)
+        })}
+    else{
+        res.status(401).json({
+            result:"Login failed, Please login with correct Email ID and Password or Sign Up"
+        })
+    }        
+        
+    } catch (error) {
+        console.log('error' , error);
+        
+    }
+    
 
 };
 
