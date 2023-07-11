@@ -1,23 +1,38 @@
 import React from 'react'
-import { useState } from 'react';
+import { useState , useEffect} from 'react';
 import Header from '../components/Header';
 import {Styledcard,StyledDiv,StyledFormDiv} from './Styled'
 import { CardContent,Button,CardActions,TextField, FormControl,Typography } from '@mui/material'
 import {  useDispatch , useSelector} from 'react-redux';
 import { login } from '../actions/userActions';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 
-const LoginPage = () => {
+
+const LoginPages = () => {
     const dispatch=useDispatch();
     const [formData, setFormData]=useState({});
     console.log('formdata from login' ,formData);
-
     const loginData = useSelector((state) => state.userLoginReducer.loginInfo);
-
     console.log('loginData',loginData);
 
+// UseEffect helps you to render Component again whgen loginData changed
 
+useEffect=(( ) =>{ 
+  const navigate = useNavigate();
+  if(loginData?.role === 0){
+navigate('/home')
+
+  }
+  else if (loginData?.role ===1)
+  
+  {
+    navigate('/admin-dashboard')
+  }
+  else{navigate('/signup')}
+  
+});
     const handleChange = (event) => {
         const {name, value} =event.target;
         setFormData((prevState) => ({
@@ -42,7 +57,8 @@ dispatch(login(email,password));
 
   return (
         <div   >
-      <Header buttonName="Signup"/>
+      
+      <Header buttonName="Login Issue "/>
 
       
       <StyledDiv>
@@ -82,8 +98,10 @@ dispatch(login(email,password));
         </StyledFormDiv>
       </CardContent>
       <CardActions >
-        <Button variant="contained" size="small" sx={{marginLeft:'80px'}} onClick={handleSubmit} >Login</Button>
-        <Button variant="contained" size="small" >Reset </Button>
+        <Button variant="contained" size="small"  onClick={handleSubmit} sx={{marginLeft:'35px'}}>Login</Button>
+        <Link to = "/signup">
+        <Button variant="contained" size="small"sx={{marginLeft:'47px'}} >Sign Up Here  </Button>
+       </Link>
       </CardActions>
     </Styledcard></StyledDiv>
     </div>
@@ -91,4 +109,4 @@ dispatch(login(email,password));
   )
 }
 
-export default LoginPage;
+export default LoginPages;

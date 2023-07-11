@@ -1,14 +1,17 @@
-import React, {useState} from 'react';
+import React, {useState , useEffect} from 'react';
 import Header from '../components/Header';
 import {Styledcard,StyledDiv,StyledFormDiv,StyledBox} from './Styled'
 import { CardContent,Button,CardActions,TextField, FormControl,Typography,InputLabel,Select,MenuItem } from '@mui/material';
 import { useDispatch,useSelector } from 'react-redux';
 import { register } from '../actions/userActions';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { useSnackbar } from 'notistack'
 
 
 
 const SignUpPage = () => {
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar()
     const dispatch=useDispatch();
     const navigate = useNavigate();
 const [formData, setFormData] = useState({});
@@ -32,16 +35,28 @@ const handleChange = (event) => {
 const handleSubmit = (event) => {
     event.preventDefault();
     const {name,email,password,about,role}=formData;
-    console.log('HandleSubmitSignup',formData);
+    // console.log('HandleSubmitSignup',formData);
     dispatch(register(name,email,password,about,role));
-    console.log('pass', password);
-    navigate('/');
+    // console.log('pass', password);
+    
+      
+    navigate('/')
+    
+    
+    
+  
+  }
+  
+    
+    
+    
+    
 
-}
     
   return (
     <div>
-      <Header buttonName="Login"/>
+      
+      <Header buttonName="Signup Issue" />
       <StyledDiv>
         <Styledcard>
     
@@ -98,7 +113,7 @@ const handleSubmit = (event) => {
 </FormControl>
 </StyledFormDiv>
  <StyledBox >
-<FormControl sx={{    width: '24vw'}}>
+<FormControl sx={{    width: '25vw'}}>
         <InputLabel id="demo-simple-select-error-label">
           Role
         </InputLabel>
@@ -122,13 +137,15 @@ const handleSubmit = (event) => {
         
       </CardContent>
       <CardActions sx={{margin:'center'}} >
-        <Button variant="contained" size="small" sx={{marginLeft:'95px'}} onClick={handleSubmit}>SignUp</Button>
-        <Button variant="contained" size="small" >Reset</Button>
+        <Button variant="contained" size="small" sx={{marginLeft:'55px'}} onClick={handleSubmit}>Sign Up</Button>
+        <Link to = "/"> <Button variant="contained" size="small" sx={{marginLeft:'55px'}}>Login Page</Button></Link>
       </CardActions>
     </Styledcard></StyledDiv>
 
 
     </div>
   )
+  
+  
   }
   export default SignUpPage;

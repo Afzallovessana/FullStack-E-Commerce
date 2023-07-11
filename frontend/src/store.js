@@ -7,10 +7,13 @@ const reducer = combineReducers({
     userRegisterReducer:userRegisterReducer,
     userLoginReducer:userLoginReducer,
 
-})
-
-const initialState ={};
-
+});
+const dateFromLocalStorage= localStorage.getItem("loginInfo")?JSON.parse(localStorage.getItem('loginInfo')):null;
+// console.log('dateFromLocalStorage' ,dateFromLocalStorage);
+const initialState ={
+    userLoginReducer:{loginInfo:dateFromLocalStorage}
+};
+// console.log('initialstate', initialState);
 const middleware = [thunk];
 
 const store = createStore(reducer, initialState, composeWithDevTools(applyMiddleware(...middleware)));
