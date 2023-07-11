@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { connect } from "mongoose";
 
 
 
@@ -6,7 +6,7 @@ function initDB() {
     // for already connected
     if(mongoose.connections[0].readystate) {
         console.log('connection already exist')
-        return
+        return ('Already Connected')
     }
     // Connected
 const uri= process.env.MONGO_URI;
